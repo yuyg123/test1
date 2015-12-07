@@ -18,14 +18,13 @@ public class BinTree {
 	public static String TreeLevel(TNode tree, int n){
 		StringBuffer s=new StringBuffer();
 		TreeLevel(tree, n, s);
-		String str= s.toString();		
+		String str= s.toString();	
+		System.out.print(str);
 		return str;
 	}
 	
 	public static void TreeLevel(TNode tree, int n,StringBuffer s){
 		if(n==2){
-			//System.out.print(tree.left.value);			
-			//System.out.print(tree.right.value);
 			s.append(tree.left.value);
 			s.append(tree.right.value);			
 		}
