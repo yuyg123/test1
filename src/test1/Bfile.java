@@ -1,49 +1,48 @@
 package test1;
 
-import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 public class Bfile {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		String path = "C:/Users/John/Desktop/a.txt";
+		File file = new File(path);
+		byte[] bfile = null;
+		try {
+			bfile = file2buf(file);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		for(int i=0;i<bfile.length;i++){
+			System.out.print(bfile[i]);
+		}
+	
 	}
 
-	public static byte[] file2buf(byte[] bfile, String filePath, String fileName) {
-		BufferedOutputStream bos = null; // 新建一个输出流
-		FileOutputStream fos = null; // w文件包装输出流
-		File file = null;
-		try {
-			File dir = new File(filePath);
-			if (!dir.exists() && dir.isDirectory()) {// 判断文件目录是否存在
-				dir.mkdirs();
-			}
-			file = new File(filePath + "\\" + fileName); // 新建一个file类
-			fos = new FileOutputStream(file);
-			bos = new BufferedOutputStream(fos); // 输出的byte文件
-			bos.write(bfile);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (bos != null) {
-				try {
-					bos.close(); // 关闭资源
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-			}
-			if (fos != null) {
-				try {
-					fos.close(); // 关闭资源
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-			}
+	/*
+	 * 根据文件生成byte数组
+	 */
+	public static byte[] file2buf(File file) throws IOException {
+		byte[] bfile = null;
+		if (!file.exists()) {
+			return null;
 		}
+		FileInputStream fis = new FileInputStream(file);
+		ByteArrayOutputStream bos = new ByteArrayOutputStream(1000);
+		byte[] b = new byte[1000];
+		int i;
+		while ((i = fis.read(b)) != -1) {
+			bos.write(b, 0, i);
+		}
+		fis.close();
+		bos.close();
+		bfile = bos.toByteArray();
 		return bfile;
 	}
+	
 
 }
