@@ -18,7 +18,7 @@ public class Bfile {
 		for (int i = 0; i < bfile.length; i++) {
 			System.out.print(bfile[i]);
 		}
-
+		
 	}
 
 	/*
@@ -52,8 +52,8 @@ public class Bfile {
 				e.printStackTrace();
 			}
 		}
-		bfile = bos.toByteArray();
 		return bfile;
 	}
+
 
 }
