@@ -1,48 +1,58 @@
 package test1;
 
-import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 public class Bfile {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		String filePath = "C:/Users/John/Desktop/a.txt";		
+		byte[] bfile = null;
+		try {
+			bfile = file2buf(filePath);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		for (int i = 0; i < bfile.length; i++) {
+			System.out.print(bfile[i]);
+		}
 
 	}
 
-	public static byte[] file2buf(byte[] bfile, String filePath, String fileName) {
-		BufferedOutputStream bos = null; // 新建一个输出流
-		FileOutputStream fos = null; // w文件包装输出流
-		File file = null;
+	/*
+	 * 鏂囦欢杞崲涓篵yte[]鏁扮粍
+	 */
+	public static byte[] file2buf(String filePath) throws IOException {
+		File file = new File(filePath);
+		byte[] bfile = null;
+		if (!file.exists() && file.isDirectory()) {
+			return null;
+		}
+		FileInputStream fis = new FileInputStream(file);
+		ByteArrayOutputStream bos = new ByteArrayOutputStream(4000);
+		byte[] b = new byte[4000];
+		int i;
 		try {
-			File dir = new File(filePath);
-			if (!dir.exists() && dir.isDirectory()) {// 判断文件目录是否存在
-				dir.mkdirs();
+			while ((i = fis.read(b)) != -1) {
+				bos.write(b, 0, i);
 			}
-			file = new File(filePath + "\\" + fileName); // 新建一个file类
-			fos = new FileOutputStream(file);
-			bos = new BufferedOutputStream(fos); // 输出的byte文件
-			bos.write(bfile);
-		} catch (Exception e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
-			if (bos != null) {
-				try {
-					bos.close(); // 关闭资源
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
+			try {
+				fis.close();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-			if (fos != null) {
-				try {
-					fos.close(); // 关闭资源
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
+			try {
+				bos.close();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
+		bfile = bos.toByteArray();
 		return bfile;
 	}
 
