@@ -2,11 +2,11 @@ package tree;
 
 public class TNode {
 
-	private String value;
-	TNode leftChild;
-	TNode rightChild;
+	private char value;
+	private TNode leftChild;
+	private TNode rightChild;
 
-	public String getValue() {
+	public char getValue() {
 		return value;
 	}
 
@@ -14,14 +14,12 @@ public class TNode {
 		return rightChild;
 	}
 
-	public TNode(String value) {
-		super();
-		this.value = value;
+	public TNode(char c) {
+		this.value = c;
 	}
 
-	public TNode(TNode leftChild, TNode rightChild) {
-		this.leftChild = leftChild;
-		this.rightChild = rightChild;
+	public TNode() {
+		super();
 	}
 
 	public void setRightChild(TNode rightChild) {
@@ -36,7 +34,7 @@ public class TNode {
 		this.leftChild = leftChild;
 	}
 
-	public void setValue(String value) {
+	public void setValue(char value) {
 		this.value = value;
 	}
 

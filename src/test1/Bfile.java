@@ -8,31 +8,31 @@ import java.io.IOException;
 public class Bfile {
 
 	public static void main(String[] args) {
-		String filePath = "C:/Users/John/Desktop/a.txt";		
+		String filePath = "D:/succezIDE/jdk/jdk1.8.0_45/jre/THIRDPARTYLICENSEREADME.txt";
 		byte[] bfile = null;
 		try {
-			bfile = file2buf(filePath);
-		} catch (IOException e) {
+			bfile = file2Buf(filePath);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		for (int i = 0; i < bfile.length; i++) {
-			System.out.print(bfile[i]);
+			System.out.print(bfile[i] + ",");
 		}
-		
+
 	}
 
 	/*
 	 * 文件转换为byte[]数组
 	 */
-	public static byte[] file2buf(String filePath) throws IOException {
+	public static byte[] file2Buf(String filePath) throws Exception {
 		File file = new File(filePath);
 		byte[] bfile = null;
-		if (!file.exists() && file.isDirectory()) {
-			return null;
+		if (!file.exists() || file.isDirectory()) {
+			throw new Exception("文件不存在或输入文件路径错误");
 		}
 		FileInputStream fis = new FileInputStream(file);
-		ByteArrayOutputStream bos = new ByteArrayOutputStream(4000);
-		byte[] b = new byte[4000];
+		ByteArrayOutputStream bos = new ByteArrayOutputStream(4096);
+		byte[] b = new byte[4096];
 		int i;
 		try {
 			while ((i = fis.read(b)) != -1) {
@@ -41,19 +41,24 @@ public class Bfile {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				fis.close();
-			} catch (IOException e) {
-				e.printStackTrace();
+			if (fis != null) {
+				try {
+					fis.close();
+				} catch (Exception E) {
+
+				}
+
 			}
-			try {
-				bos.close();
-			} catch (IOException e) {
-				e.printStackTrace();
+			if (bos != null) {
+				try {
+					bos.close();
+				} catch (Exception E) {
+
+				}
 			}
 		}
+		bfile = bos.toByteArray();
 		return bfile;
 	}
-
 
 }

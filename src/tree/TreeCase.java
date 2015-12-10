@@ -1,31 +1,44 @@
 package tree;
 
 public class TreeCase {
-	
-	public static void main(String[] args){
-		BinaryTree bTree=new BinaryTree();
-		TNode[] nodes=new TNode[10]; 
-		String[] arr={"A","B","C","D","E","F","G","H","J","K"};
-		for(int i=0;i<arr.length;i++){
-			nodes[i]=new TNode(arr[i]);
-			bTree.insertNode(nodes[i]);
+
+	public static void main(String[] args) {
+		TNode node = null;
+		TNode node1 = null;
+		BinaryTree bTree = new BinaryTree();
+		BinaryTree bTree1 = new BinaryTree();
+		try {
+			node1 = bTree1.createBinaryTree("ABF####");
+			node = bTree.createBinaryTree("AB#G##CF##D#G##");
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		System.out.print("先序遍历：  ");
-		bTree.frontOrder(bTree.getTree().getNode());
-		System.out.println();
+		System.out.println(bTree.frontOrder(node));
 		System.out.print("中序遍历：  ");
-		bTree.midOrder(bTree.getTree().getNode());
-		System.out.println();
+		System.out.println(bTree.midOrder(node));
 		System.out.print("后序遍历：  ");
-		bTree.lastOrder(bTree.getTree().getNode());
-		System.out.println();
+		System.out.println(bTree.lastOrder(node));
 		System.out.print("层遍历：      ");
 		try {
-			bTree.TreeLevel(bTree.getTree().getNode(),0);
+			System.out.println(bTree.TreeLevel(node,3));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
+		System.out.print("先序遍历：  ");
+		System.out.println(bTree1.frontOrder(node1));
+		System.out.print("中序遍历：  ");
+		System.out.println(bTree1.midOrder(node1));
+		System.out.print("后序遍历：  ");
+		System.out.println(bTree1.lastOrder(node1));
+		System.out.print("层遍历：      ");
+		try {
+			System.out.println(bTree1.TreeLevel(node1,3));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }
