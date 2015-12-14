@@ -1,127 +1,171 @@
 package tree;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import test1.IllegalException;
+
+/**
+ * 创建二叉树，对树进行遍历操作
+ * 
+ * @author yuyg yuyg@succez.com
+ */
 public class BinaryTree {
 	private int index = 0;
 	private Tree tree;
 
+	/**
+	 * 创建2叉树，返回根节点
+	 * 
+	 * @param tree
+	 * @return 根节点
+	 * @throws Exception
+	 */
 	public TNode createBinaryTree(String tree) throws Exception {
 		TNode root = new TNode();
 		if (tree.isEmpty()) {
-			throw new Exception("输入的字符串不能为空");
+			throw new Exception("输入的字符串不能为空");// 判断输入的树是否为空
 		}
 		if (index < tree.length()) {
 			root.setValue(tree.charAt(index));
 			if (tree.charAt(++index) != '#') {
 				if (root.getLeftChild() == null) {
-					root.setLeftChild(createBinaryTree(tree));
+					root.setLeftChild(createBinaryTree(tree));// 如果左子树为空，创建左子树
 				}
 			}
 			if (tree.charAt(++index) != '#') {
 				if (root.getRightChild() == null) {
-					root.setRightChild(createBinaryTree(tree));
+					root.setRightChild(createBinaryTree(tree));// 如果右子树为空，创建右子树
 				}
 			}
-
 		}
 		return root;
 	}
 
-	/*
-	 * 先序遍历
+	/**
+	 * 使用先序遍历，将遍历到的节点存到List中返回
+	 * 
+	 * @param node
+	 * @return
+	 * @return List<TNode>
+	 * @throws
 	 */
-	public String frontOrder(TNode node) {
-		StringBuilder str = new StringBuilder();
-		frontOrder(node, str);
-		return str.toString();
+	public List<TNode> frontOrder(TNode node) {
+		List<TNode> list = new LinkedList<TNode>();
+		frontOrder(node, list);// 对象复用
+		return list;
 	}
 
-	public void frontOrder(TNode node, StringBuilder str) {
+	/**
+	 * 先序遍历递归调用
+	 */
+	private void frontOrder(TNode node, List<TNode> list) {
 		if (node != null) {
-			str.append(node.getValue());
-			frontOrder(node.getLeftChild(), str);
-			frontOrder(node.getRightChild(), str);
+			list.add(node);
+			frontOrder(node.getLeftChild(), list);// 遍历左子树
+			frontOrder(node.getRightChild(), list);// 遍历右子树
 		}
 	}
 
-	/*
-	 * 中序遍历
-	 */
-	public String midOrder(TNode node) {
-		StringBuilder str = new StringBuilder();
-		midOrder(node, str);
-		return str.toString();
+	public List<TNode> midOrder(TNode node) {
+		List<TNode> list = new LinkedList<TNode>();
+		midOrder(node, list);
+		return list;
 	}
 
-	public void midOrder(TNode node, StringBuilder str) {
+	/**
+	 * 中序遍历递归调用
+	 */
+	public void midOrder(TNode node, List<TNode> list) {
 		if (node != null) {
-			frontOrder(node.getLeftChild(), str);
-			str.append(node.getValue());
-			frontOrder(node.getRightChild(), str);
+			midOrder(node.getLeftChild(), list);
+			list.add(node);
+			midOrder(node.getRightChild(), list);
 		}
 	}
 
-	/*
+	/**
 	 * 后序遍历
+	 * 
+	 * @param node
+	 * @return
 	 */
-	public String lastOrder(TNode node) {
-		StringBuilder str = new StringBuilder();
-		lastOrder(node, str);
-		return str.toString();
+	public List<TNode> lastOrder(TNode node) {
+		List<TNode> list = new LinkedList<TNode>();// 创建一个list容器，用于存放遍历的树的节点
+		lastOrder(node, list);// 对象复用
+		return list;
 	}
 
-	public void lastOrder(TNode node, StringBuilder str) {
+	public void lastOrder(TNode node, List<TNode> list) {
 		if (node != null) {
-			frontOrder(node.getLeftChild(), str);
-			frontOrder(node.getRightChild(), str);
-			str.append(node.getValue());
+			lastOrder(node.getLeftChild(), list);// 遍历左子树
+			lastOrder(node.getRightChild(), list);// 遍历右子树
+			list.add(node);// 将根节点加入到list容器中
 		}
 	}
 
-	/*
-	 * 返回树指定层的数据
+	/**
+	 * 输入树的根节点和所求的层度，遍历这棵树的指定层的所有节点，将节点存到List中返回。
+	 * @param node
+	 * @param n
+	 * @return
+	 * @throws Exception
 	 */
-	public String TreeLevel(TNode node, int n) throws Exception {
+	public List<TNode> TreeLevel(TNode node, int n) throws Exception {
 		int depth = BinaryTreeDepth(node);
 		if (n < 1 || n > depth) {
-			throw new Exception("输入数字不要超过" + depth + "或者小于1");
+			throw new IllegalException(n, depth);
 		}
-		StringBuilder sbf = new StringBuilder();
-		TreeLevel(sbf, node, n);
-		String str = sbf.toString();
-		return str;
+		List<TNode> list = new LinkedList<TNode>();
+		TreeLevel(list, node, n); 
+		return list;
 	}
 
-	private void TreeLevel(StringBuilder sbf, TNode node, int n) {
+	/**
+	 * 
+	 * @Title: TreeLevel
+	 * @Description: 提供给TreeLevel(TNode node, int n)调用，进行递归操作
+	 * @author: yuyg yuyg@succez.com
+	 */
+	private void TreeLevel(List<TNode> list, TNode node, int n) {
 		if (n == 1) {
-			sbf.append(node.getValue());
-		} else if (n == 2) {
+			list.add(node);
+		} else if (n == 2) { // 如果树的层数为2时，即到了要遍历的层数的上一层，将他的左右孩子加入到list中。
 			if (node.getLeftChild() != null) {
-				sbf.append(node.getLeftChild().getValue());
+				list.add(node.getLeftChild());
 			}
 			if (node.getRightChild() != null) {
-				sbf.append(node.getRightChild().getValue());
+				list.add(node.getRightChild());
 			}
 		} else {
 			if (node.getLeftChild() != null) {
-				TreeLevel(sbf, node.getLeftChild(), n - 1);
+				TreeLevel(list, node.getLeftChild(), n - 1);// 树的左子树的遍历递归，到n=2时，即到了要遍历的层数的上一层。
 			}
 			if (node.getRightChild() != null) {
-				TreeLevel(sbf, node.getRightChild(), n - 1);
+				TreeLevel(list, node.getRightChild(), n - 1);// 树的左子树的遍历递归，到n=2时，即到了要遍历的层数的上一层。
 			}
 		}
 	}
 
-	/*
-	 * 返回树的深度
+	/**
+	 * 输入树的根节点，计算出树的深度
+	 * @param: @param node
+	 * @param: @return
+	 * @return int
+	 * @author: yuyg yuyg@succez.com
 	 */
 	private int BinaryTreeDepth(TNode node) {
 		if (node == null) {
-			return 0;
+			return 0;// 如果根节点为空，返回层数为0；
 		} else {
-			int left = BinaryTreeDepth(node.getLeftChild());
-			int right = BinaryTreeDepth(node.getRightChild());
-			return 1 + Math.max(left, right);
+			int left = BinaryTreeDepth(node.getLeftChild());// 计算根节点的左子树的深度。
+			int right = BinaryTreeDepth(node.getRightChild());// 计算根节点的右子树的深度。
+			return 1 + Math.max(left, right);// 对比左右子树的深度，取最大值，由于根节点属于一层，需要加1。
 		}
+	}
+
+	public void setIndex() {
+		this.index = 0;
 	}
 
 	public Tree getTree() {
