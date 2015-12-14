@@ -18,7 +18,7 @@ public class BfileTest {
 		bfile = new Bfile();
 	}
 
-	/*
+	/**
 	 * 测试文件内容为空
 	 */
 	@Test
@@ -30,7 +30,7 @@ public class BfileTest {
 		assertArrayEquals(b, c);
 	}
 
-	/*
+	/**
 	 * 测试小文件
 	 */
 	@Test
@@ -42,7 +42,7 @@ public class BfileTest {
 		assertArrayEquals(b, c);
 	}
 
-	/*
+	/**
 	 * 测试文件是否存在
 	 */
 	@Test
@@ -54,7 +54,7 @@ public class BfileTest {
 		assertArrayEquals(b, c);
 	}
 
-	/*
+	/**
 	 * 测试文件类型
 	 */
 	@Test
@@ -66,7 +66,7 @@ public class BfileTest {
 		assertArrayEquals(b, c);
 	}
 
-	/*
+	/**
 	 * 测试文件是否丢失信息
 	 */
 	@Test

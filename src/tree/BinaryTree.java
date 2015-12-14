@@ -3,11 +3,9 @@ package tree;
 import java.util.LinkedList;
 import java.util.List;
 
-import test1.IllegalException;
 
 /**
- * 创建二叉树，对树进行遍历操作
- * 
+ * 创建二叉树，对树进行遍历操作 
  * @author yuyg yuyg@succez.com
  */
 public class BinaryTree {
@@ -111,22 +109,16 @@ public class BinaryTree {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<TNode> TreeLevel(TNode node, int n) throws Exception {
+	public List<TNode> TreeLevel(TNode node, int n)  {
 		int depth = BinaryTreeDepth(node);
 		if (n < 1 || n > depth) {
-			throw new IllegalException(n, depth);
+			throw new IllegalArgumentException("输入层数不能超过"+depth+"或者小于等于0！");
 		}
 		List<TNode> list = new LinkedList<TNode>();
 		TreeLevel(list, node, n); 
 		return list;
 	}
 
-	/**
-	 * 
-	 * @Title: TreeLevel
-	 * @Description: 提供给TreeLevel(TNode node, int n)调用，进行递归操作
-	 * @author: yuyg yuyg@succez.com
-	 */
 	private void TreeLevel(List<TNode> list, TNode node, int n) {
 		if (n == 1) {
 			list.add(node);
@@ -149,14 +141,11 @@ public class BinaryTree {
 
 	/**
 	 * 输入树的根节点，计算出树的深度
-	 * @param: @param node
-	 * @param: @return
-	 * @return int
-	 * @author: yuyg yuyg@succez.com
+	 * @return 树的层数
 	 */
 	private int BinaryTreeDepth(TNode node) {
 		if (node == null) {
-			return 0;// 如果根节点为空，返回层数为0；
+			return 0;
 		} else {
 			int left = BinaryTreeDepth(node.getLeftChild());// 计算根节点的左子树的深度。
 			int right = BinaryTreeDepth(node.getRightChild());// 计算根节点的右子树的深度。

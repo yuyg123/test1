@@ -25,28 +25,22 @@ public class BinaryTreeTest {
 	@Test
 	public void test() throws Exception {
 		TNode root1 = null;
-		TNode root2 = null;
-		TNode root3 = null;
-		TNode root4 = null;
 
 		BinaryTree bTree1 = new BinaryTree();
 		root1 = bTree1.createBinaryTree("B##");// 测试只有根节点的树  A
 		assertEquals("B", ListtoString(bTree1.TreeLevel(root1, 1)));
 
-		//BinaryTree bTree2 = new BinaryTree();
 		bTree1.setIndex();
 		root1 = bTree1.createBinaryTree("AB##C##");// 测试深度为2的慢二叉树A(B,C)
 		assertEquals("A", ListtoString(bTree1.TreeLevel(root1, 1)));
 		assertEquals("BC", ListtoString(bTree1.TreeLevel(root1, 2)));
 
-		//BinaryTree bTree3 = new BinaryTree();
 		bTree1.setIndex();
 		root1 = bTree1.createBinaryTree("AB##CD###");// 测试一棵任意二叉树 A(B,C(D,))
 		assertEquals("A", ListtoString(bTree1.TreeLevel(root1, 1)));
 		assertEquals("BC", ListtoString(bTree1.TreeLevel(root1, 2)));
 		assertEquals("D", ListtoString(bTree1.TreeLevel(root1, 3)));
 		
-		//BinaryTree bTree4 = new BinaryTree();
 		bTree1.setIndex();
 		root1 = bTree1.createBinaryTree("ABGA###H##CD##EI##J##");// 测试一棵完全二叉树 A(B(G(A,),H),C(D,E(I,J)))
 		assertEquals("A", ListtoString(bTree1.TreeLevel(root1, 1)));
